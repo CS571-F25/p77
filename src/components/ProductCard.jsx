@@ -1,0 +1,61 @@
+import { Card, Button, Badge } from "react-bootstrap";
+import { Link } from "react-router";
+import ProductPlaceholderIcon from "./ProductPlaceholderIcon";
+
+export default function ProductCard({product}) {
+    const onSale = product.onSale && product.salePrice
+    return (
+        <Card className="h-100 shadow-sm">
+            {product.image ? (
+                <Card.Img
+                variant="top"
+                src={product.image}
+                alt={product.name}
+                style={{ objectFit: "cover", height: "180px" }}
+                />
+            ) : (
+                <ProductPlaceholderIcon />
+            )}
+
+            <Card.Body className="d-flex flex-column">
+                <Card.Title className="fs-6 mb-1">{product.name}</Card.Title>
+                <div className="mb-2">
+                {onSale ? (
+                    <>
+                    <span className="text-danger fw-bold">
+                        ${product.salePrice.toFixed(2)}
+                    </span>{" "}
+                    <span className="text-muted text-decoration-line-through">
+                        ${product.price.toFixed(2)}
+                    </span>
+                    </>
+                ) : (
+                    <span className="fw-bold">
+                    ${product.price.toFixed(2)}
+                    </span>
+                )}
+                </div>
+
+                {product.badge && (
+                    <Badge bg="warning" text="dark" className="mb-2">
+                        {product.badge}
+                    </Badge>
+                )}
+
+                <div className="mt-auto d-flex gap-2">
+                    <Button
+                        as={Link}
+                        to={`/product/${product.id}`}
+                        variant="outline-dark"
+                        size="sm"
+                    >
+                        View
+                    </Button>
+                    <Button variant="dark" size="sm">
+                        Add to Cart
+                    </Button>
+                </div>
+            </Card.Body>
+        </Card>
+    )
+}
