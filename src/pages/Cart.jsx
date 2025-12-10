@@ -1,28 +1,14 @@
 import { Container, Row, Col, Card, Button, ListGroup, Form } from "react-bootstrap";
-import { Link } from "react-router";
+import { useNavigate, Link } from "react-router";
+import { useCart } from "../context/CartContext";
 
 export default function Cart() {
-
-  // TODO: replace this with real cart state / context later
-  const cartItems = [
-    {
-      id: "gmmk-pro",
-      name: "GMMK Pro 75% Mechanical Keyboard",
-      price: 169.99,
-      quantity: 1
-    },
-    {
-      id: "logitech-g502",
-      name: "Logitech G502 HERO Gaming Mouse",
-      price: 49.99,
-      quantity: 1
-    }
-  ];
+  const { cartItems, updateQuantity, removeFromCart } = useCart();
 
   const subtotal = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
-  )
+  );
 
   return (
     <Container className="py-4">
@@ -40,7 +26,6 @@ export default function Cart() {
         </Card>
       ) : (
         <Row className="g-4">
-          {/* Left: cart items */}
           <Col md={8}>
             <Card className="shadow-sm">
               <Card.Body>
@@ -59,17 +44,38 @@ export default function Cart() {
                       </div>
 
                       <div className="text-end" style={{ minWidth: "140px" }}>
-                        <Form.Select size="sm" value={item.quantity} disabled className="mb-1" style={{ maxWidth: "80px", marginLeft: "auto" }}>
-                          {[1, 2, 3, 4, 5].map((q) => (
-                            <option key={q} value={q}>
-                              {q}
-                            </option>
-                          ))}
-                        </Form.Select>
+                        <div className="d-flex align-items-center justify-content-end mb-1">
+                          <Button
+                            variant="outline-secondary"
+                            size="sm"
+                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            disabled={item.quantity <= 1}
+                            aria-label={`Decrease quantity of ${item.name}`}
+                          >
+                            −
+                          </Button>
+                          <span className="mx-2" style={{ minWidth: "20px", textAlign: "center" }}>
+                            {item.quantity}
+                          </span>
+                          <Button
+                            variant="outline-secondary"
+                            size="sm"
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            aria-label={`Increase quantity of ${item.name}`}
+                          >
+                            +
+                          </Button>
+                        </div>
                         <div className="fw-bold">
                           ${(item.price * item.quantity).toFixed(2)}
                         </div>
-                        <Button variant="link" size="sm" className="p-0 text-danger" disabled>
+                        <Button
+                          variant="link"
+                          size="sm"
+                          className="p-0 text-danger"
+                          onClick={() => removeFromCart(item.id)}
+                          aria-label={`Remove ${item.name} from cart`}
+                        >
                           Remove
                         </Button>
                       </div>
@@ -80,7 +86,6 @@ export default function Cart() {
             </Card>
           </Col>
 
-          {/* Right: summary */}
           <Col md={4}>
             <Card className="shadow-sm">
               <Card.Body>
@@ -103,11 +108,16 @@ export default function Cart() {
                   <span>${subtotal.toFixed(2)}</span>
                 </div>
 
-                <Button variant="dark" className="w-100 mb-2" disabled>
+                <Button as={Link} to="/checkout" variant="dark" className="w-100 mb-2">
                   Proceed to Checkout
                 </Button>
 
-                <Button as={Link} to="/" variant="outline-secondary" className="w-100">
+                <Button
+                  as={Link}
+                  to="/"
+                  variant="outline-secondary"
+                  className="w-100"
+                >
                   Continue shopping
                 </Button>
               </Card.Body>

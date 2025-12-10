@@ -1,11 +1,13 @@
 import { Card, Button, Badge } from "react-bootstrap";
 import { Link } from "react-router";
 import ProductPlaceholderIcon from "./ProductPlaceholderIcon";
+import { useCart } from "../context/CartContext"
 
 export default function ProductCard({product}) {
+    const {addToCart} = useCart()
     const onSale = product.onSale && product.salePrice
     return (
-        <Card className="h-100 shadow-sm">
+        <Card className="shadow-sm">
             {product.image ? (
                 <Card.Img
                 variant="top"
@@ -51,7 +53,7 @@ export default function ProductCard({product}) {
                     >
                         View
                     </Button>
-                    <Button variant="dark" size="sm">
+                    <Button variant="dark" size="sm" onClick={()=>addToCart(product)} aria-label={`Add ${product.name} to cart`}>
                         Add to Cart
                     </Button>
                 </div>
