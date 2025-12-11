@@ -83,8 +83,12 @@ export default function ProductDetail() {
           </p>
 
           <Form className="d-flex align-items-center gap-2 mb-3" style={{ maxWidth: "260px" }}>
-            <Form.Label className="mb-0">Quantity</Form.Label>
+            <Form.Label htmlFor="quantitySelect" className="mb-0">
+              Quantity
+            </Form.Label>
+
             <Form.Select
+              id="quantitySelect"
               size="sm"
               value={quantity}
               onChange={(e) => setQuantity(Number(e.target.value))}
