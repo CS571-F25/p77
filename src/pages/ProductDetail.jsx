@@ -43,7 +43,7 @@ export default function ProductDetail() {
                 variant="top"
                 src={product.image}
                 alt={product.name}
-                style={{ objectFit: "cover", maxHeight: "320px" }}
+                style={{ objectFit: "contain", maxHeight: "320px" }}
               />
             ) : (
               <ProductPlaceholderIcon />
@@ -79,7 +79,7 @@ export default function ProductDetail() {
           )}
 
           <p className="text-muted">
-            Demo Product Description
+            {product.desc}
           </p>
 
           <Form className="d-flex align-items-center gap-2 mb-3" style={{ maxWidth: "260px" }}>

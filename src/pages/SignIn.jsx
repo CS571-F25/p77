@@ -71,12 +71,11 @@ export default function SignIn() {
               {loading ? "Signing in..." : "Sign In"}
             </Button>
 
-            <div className="mt-2 d-flex justify-content-between small">
+            <div className="mt-2 text-center small">
               <span className="text-muted">
                 Don't have an account?{" "}
                 <Link to="/signup">Sign up</Link>
               </span>
-              <span className="text-muted">Forgot password?</span>
             </div>
           </Form>
         </Card.Body>

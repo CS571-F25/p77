@@ -13,7 +13,11 @@ export default function ProductCard({product}) {
                 variant="top"
                 src={product.image}
                 alt={product.name}
-                style={{ objectFit: "cover", height: "180px" }}
+                  style={{
+                    height: "180px",
+                    width: "100%",
+                    objectFit: "contain"
+                }}
                 />
             ) : (
                 <ProductPlaceholderIcon />

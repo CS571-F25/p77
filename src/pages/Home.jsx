@@ -83,7 +83,7 @@ export default function Home () {
                 </Button>
                 </div>
                 <Row xs={1} sm={2} md={3} lg={4} className="g-3">
-                {keyboards.map((p) => (
+                {keyboards.slice(0,4).map((p) => (
                     <Col key={p.id}>
                     <ProductCard product={p} />
                     </Col>
@@ -105,7 +105,7 @@ export default function Home () {
                 </Button>
                 </div>
                 <Row xs={1} sm={2} md={3} lg={4} className="g-3">
-                {mice.map((p) => (
+                {mice.slice(0,4).map((p) => (
                     <Col key={p.id}>
                     <ProductCard product={p} />
                     </Col>
@@ -127,7 +127,7 @@ export default function Home () {
                 </Button>
                 </div>
                 <Row xs={1} sm={2} md={3} lg={4} className="g-3">
-                {consoles.map((p) => (
+                {consoles.slice(0,4).map((p) => (
                     <Col key={p.id}>
                     <ProductCard product={p} />
                     </Col>
